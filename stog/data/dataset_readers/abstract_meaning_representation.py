@@ -201,9 +201,10 @@ class AbstractMeaningRepresentationDatasetReader(DatasetReader):
                 list_data['src_copy_invalid_ids']
             )
 
-            fields["amr"] = MetadataField(
-                amr
-            )
+        # MOD: set amr for train 
+        fields["amr"] = MetadataField(
+            amr
+        )
 
         return Instance(fields)
 

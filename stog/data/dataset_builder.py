@@ -76,8 +76,16 @@ def iterator_from_params(vocab, params):
         train_iterator = BasicIterator(
             batch_size=train_batch_size
         )
+    elif 'Curriculum' in iter_type:
+        from stog.data import iterators
+        cl_kwargs = params.get('curriculum_kwargs',{})
+        train_iterator = getattr(iterators,iter_type)(
+            sorting_keys = list(map(tuple, params.get('sorting_keys', []))),
+            batch_size = train_batch_size,
+            **cl_kwargs
+        )
     else:
-        raise NotImplementedError
+        raise NotImplementedError(iter_type)
 
     dev_iterator = BasicIterator(
         batch_size=train_batch_size

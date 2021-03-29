@@ -88,7 +88,7 @@ class DataIterator(Registrable):
     def __call__(self,
                  instances: Iterable[Instance],
                  num_epochs: int = None,
-                 shuffle: bool = True) -> Iterator[TensorDict]:
+                 shuffle: bool = True, **kwargs) -> Iterator[TensorDict]:
         """
         Returns a generator that yields batches over the given dataset
         for the given number of epochs. If ``num_epochs`` is not specified,
@@ -135,7 +135,7 @@ class DataIterator(Registrable):
                         epoch_tensor.fill_(epoch)
                     yield tensor_dict
             else:
-                batches = self._create_batches(instances, shuffle)
+                batches = self._create_batches(instances, shuffle, **kwargs)
 
                 # Should we add the instances to the cache this epoch?
                 add_to_cache = self._cache_instances and key not in self._cache

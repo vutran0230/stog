@@ -171,7 +171,8 @@ class Trainer:
         train_generator = self._iterator(
             instances=self._training_dataset,
             shuffle=self._shuffle,
-            num_epochs=1
+            num_epochs=1, 
+            train_epoch=epoch,
         )
 
         num_training_batches = self._iterator.get_num_batches(self._training_dataset)
@@ -318,9 +319,9 @@ class Trainer:
             dev_generator_tqdm.set_description(description, refresh=False)
 
         if self._n_gpus > 1:
-            return self._model.module.get_metrics(reset=True, mimick_test=epoch > 50)
+            return self._model.module.get_metrics(reset=True, mimick_test=epoch > 50, validation=True)
         else:
-            return self._model.get_metrics(reset=True, mimick_test=epoch > 50)
+            return self._model.get_metrics(reset=True, mimick_test=epoch > 50, validation=True)
 
     def train(self):
         """Trains the supplied model with the supplied parameters.

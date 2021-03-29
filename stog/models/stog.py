@@ -138,10 +138,14 @@ class STOG(Model):
         self.decoder_token_indexers = token_indexers
         self.character_tokenizer = CharacterTokenizer()
 
-    def get_metrics(self, reset: bool = False, mimick_test: bool = False):
+    def get_metrics(self, reset: bool = False, mimick_test: bool = False, validation=False):
         metrics = dict()
-        if mimick_test and self.test_config:
-            metrics = self.mimick_test()
+        if self.test_config and validation: 
+            mimic_metrics = self.mimick_test()
+            metrics.update({'mimic_%s'%k:v for k,v in mimic_metrics.items()})
+            if mimick_test:
+                metrics.update(mimic_metrics)
+        
         generator_metrics = self.generator.metrics.get_metric(reset)
         graph_decoder_metrics = self.graph_decoder.metrics.get_metric(reset)
         metrics.update(generator_metrics)

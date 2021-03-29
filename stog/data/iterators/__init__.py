@@ -8,3 +8,4 @@ from stog.data.iterators.basic_iterator import BasicIterator
 from stog.data.iterators.bucket_iterator import BucketIterator
 from stog.data.iterators.epoch_tracking_bucket_iterator import EpochTrackingBucketIterator
 from stog.data.iterators.multiprocess_iterator import MultiprocessIterator
+from stog.data.iterators.curriculum_iterator import *

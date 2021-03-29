@@ -107,7 +107,7 @@ class BucketIterator(DataIterator):
         self._biggest_batch_first = biggest_batch_first
 
     @overrides
-    def _create_batches(self, instances: Iterable[Instance], shuffle: bool) -> Iterable[Batch]:
+    def _create_batches(self, instances: Iterable[Instance], shuffle: bool, train_epoch = None) -> Iterable[Batch]:
         for instance_list in self._memory_sized_lists(instances):
 
             instance_list = sort_by_padding(instance_list,
